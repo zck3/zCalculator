@@ -31,4 +31,5 @@ Run the `configure` script to verify these are installed.
 * 0.2 Translated Objective-C UI code from my closed-source Eval iOS calculator project.
 * 0.3 Using Expression framework for expression evaluation.
 * 0.4 Improved GUI to allow keyboard entry.
+* 0.5 Minor fix for SwiftQt 0.28.
 

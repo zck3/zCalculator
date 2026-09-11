@@ -327,7 +327,7 @@ class CalculatorWindow : QMainWindow {
 		
 		let placeholder = "Expression"
 		expressionField = QLineEdit (self)
-		expressionField?.setPlaceholder (placeholder)
+		expressionField?.setPlaceholderText (placeholder)
 		expressionField?.setAlignment (Qt.AlignRight)
 		
 		buttonE = createButton("e", userPressedE)
