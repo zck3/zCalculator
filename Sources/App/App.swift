@@ -44,7 +44,7 @@ struct AppStruct {
 class App {
 	var calculatorWindow : CalculatorWindow?
 
-	public static let release = "0.4"
+	public static let release = "0.6"
 
 	let maximumWidth = 300
 	let maximumHeight = 400
