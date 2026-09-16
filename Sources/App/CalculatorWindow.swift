@@ -314,10 +314,10 @@ class CalculatorWindow : QMainWindow {
 		setMenuBar (menuBar!)
 	}
 
-	private func createButton (_ text: String, _ closure: @escaping (() -> Bool)) -> QPushButton
+	private func createButton (_ text: String, _ closure: @escaping (() -> Void)) -> QPushButton
 	{
 		let button = QPushButton (self, text)
-		button.clickedHandler = closure
+		button.clickedSlot = closure
 		return button
 	}
 
@@ -415,15 +415,6 @@ class CalculatorWindow : QMainWindow {
 
 		setTitle("zCalculator \(App.release)")
 
-		self.windowResizedHandler = { [weak self] (_ event : QEvent) -> Bool in
-			guard let self = self else {
-				return false
-			}
-			let newWidth = self.width()
-			let newHeight = self.height()
-			print ("CalculatorWindow windowResizedHandler called, new size is \(newWidth)x\(newHeight).")
-			return true
-		}
 		self.windowKeyPressHandler = { [weak self] (_ event : QEvent) -> Bool in
 			guard let self = self else {
 				return false
@@ -433,10 +424,12 @@ class CalculatorWindow : QMainWindow {
 			//print ("Key press: \(keyCode)")
 
 			if keyCode == Qt.Key_Backspace || keyCode == Qt.Key_Delete {
-				return self.userPressedDelete()
+				self.userPressedDelete()
+				return true
 			}
 			if keyCode == Qt.Key_Enter || keyCode == Qt.Key_Return {
-				return self.userPressedEnter()
+				self.userPressedEnter()
+				return true
 			}
 
 			if keyCode >= 65 && keyCode <= 90 && 0 == (event.x & Qt.ShiftModifier) {
@@ -452,7 +445,8 @@ class CalculatorWindow : QMainWindow {
 				return true
 			}
 			else if ch == "=" {
-				return self.userPressedEnter()
+				self.userPressedEnter()
+				return true
 			}
 			else if ch >= "a" && ch <= "z" {
 				self.appendToExpression(String(ch))
@@ -551,183 +545,149 @@ class CalculatorWindow : QMainWindow {
 		expressionField?.setText(expressionString)
 	}
 
-	private func userPressed0 () -> Bool {
+	private func userPressed0 () {
 		appendToExpression ("0")
 		button0?.clearFocus()
-		return true
 	}
-	private func userPressed1 () -> Bool {
+	private func userPressed1 () {
 		appendToExpression ("1")
 		button1?.clearFocus()
-		return true
 	}
-	private func userPressed2 () -> Bool {
+	private func userPressed2 () {
 		appendToExpression ("2")
 		button2?.clearFocus()
-		return true
 	}
-	private func userPressed3 () -> Bool {
+	private func userPressed3 () {
 		appendToExpression ("3")
 		button3?.clearFocus()
-		return true
 	}
-	private func userPressed4 () -> Bool {
+	private func userPressed4 () {
 		appendToExpression ("4")
 		button4?.clearFocus()
-		return true
 	}
-	private func userPressed5 () -> Bool {
+	private func userPressed5 () {
 		appendToExpression ("5")
 		button5?.clearFocus()
-		return true
 	}
-	private func userPressed6 () -> Bool {
+	private func userPressed6 () {
 		appendToExpression ("6")
 		button6?.clearFocus()
-		return true
 	}
-	private func userPressed7 () -> Bool {
+	private func userPressed7 () {
 		appendToExpression ("7")
 		button7?.clearFocus()
-		return true
 	}
-	private func userPressed8 () -> Bool {
+	private func userPressed8 () {
 		appendToExpression ("8")
 		button8?.clearFocus()
-		return true
 	}
-	private func userPressed9 () -> Bool {
+	private func userPressed9 () {
 		appendToExpression ("9")
 		button9?.clearFocus()
-		return true
 	}
-	private func userPressedInsertResult () -> Bool {
+	private func userPressedInsertResult () {
 		let resultString = "\(lastResult)"
 		appendToExpression (resultString)
 		buttonInsertResult?.clearFocus()
-		return true
 	}
-	private func userPressedRaiseToPower () -> Bool {
+	private func userPressedRaiseToPower () {
 		appendToExpression ("pow(")
 		buttonPower?.clearFocus()
-		return true
 	}
-	private func userPressedPi () -> Bool {
+	private func userPressedPi () {
 		appendToExpression ("pi")
 		buttonPi?.clearFocus()
-		return true
 	}
-	private func userPressedSine () -> Bool {
+	private func userPressedSine () {
 		appendToExpression ("sin(")
 		buttonSine?.clearFocus()
-		return true
 	}
-	private func userPressedArccosine () -> Bool {
+	private func userPressedArccosine () {
 		appendToExpression ("acos(")
 		buttonArccosine?.clearFocus()
-		return true
 	}
-	private func userPressedAdd () -> Bool {
+	private func userPressedAdd () {
 		appendToExpression ("+")
 		buttonAdd?.clearFocus()
-		return true
 	}
-	private func userPressedArcsine () -> Bool {
+	private func userPressedArcsine () {
 		appendToExpression ("asin(")
 		buttonArcsine?.clearFocus()
-		return true
 	}
-	private func userPressedArctangent () -> Bool {
+	private func userPressedArctangent () {
 		appendToExpression ("atan(")
 		buttonArctangent?.clearFocus()
-		return true
 	}
-	private func userPressedCosine () -> Bool {
+	private func userPressedCosine () {
 		appendToExpression ("cos(")
 		buttonCosine?.clearFocus()
-		return true
 	}
-	private func userPressedDelete () -> Bool {
+	private func userPressedDelete () {
 		if expressionString != "" {
 			expressionString = String(expressionString.dropLast())
 			expressionField?.setText(expressionString)
 		}
 		buttonDelete?.clearFocus()
-		return true
 	}
-	private func userPressedDivide () -> Bool {
+	private func userPressedDivide () {
 		appendToExpression ("/")
 		buttonDiv?.clearFocus()
-		return true
 	}
-	private func userPressedDot () -> Bool {
+	private func userPressedDot () {
 		appendToExpression (".")
 		buttonDot?.clearFocus()
-		return true
 	}
-	private func userPressedNaturalLog () -> Bool {
+	private func userPressedNaturalLog () {
 		appendToExpression ("ln(")
 		buttonLn?.clearFocus()
-		return true
 	}
-	private func userPressedLog10 () -> Bool {
+	private func userPressedLog10 () {
 		appendToExpression ("log(")
 		buttonLog10?.clearFocus()
-		return true
 	}
-	private func userPressedMultiply () -> Bool {
+	private func userPressedMultiply () {
 		appendToExpression ("*")
 		buttonMul?.clearFocus()
-		return true
 	}
-	private func userPressedSquareRoot () -> Bool {
+	private func userPressedSquareRoot () {
 		appendToExpression ("sqrt(")
 		buttonSquareRoot?.clearFocus()
-		return true
 	}
-	private func userPressedComma () -> Bool {
+	private func userPressedComma () {
 		appendToExpression (",")
 		buttonComma?.clearFocus()
-		return true
 	}
-	private func userPressedSubtract () -> Bool {
+	private func userPressedSubtract () {
 		appendToExpression ("-")
 		buttonSub?.clearFocus()
-		return true
 	}
-	private func userPressedTangent () -> Bool {
+	private func userPressedTangent () {
 		appendToExpression ("tan(")
 		buttonTangent?.clearFocus()
-		return true
 	}
-	private func userPressedLeftParens () -> Bool {
+	private func userPressedLeftParens () {
 		appendToExpression ("(")
 		buttonLeftParens?.clearFocus()
-		return true
 	}
-	private func userPressedRightParens () -> Bool {
+	private func userPressedRightParens () {
 		appendToExpression (")")
 		buttonRightParens?.clearFocus()
-		return true
 	}
-	private func userPressedAbsolute () -> Bool {
+	private func userPressedAbsolute () {
 		appendToExpression ("abs(")
 		buttonAbsolute?.clearFocus()
-		return true
 	}
-	private func userPressedE () -> Bool {
+	private func userPressedE () {
 		appendToExpression ("e")
 		buttonE?.clearFocus()
-		return true
 	}
-	private func userPressedEnter () -> Bool {
+	private func userPressedEnter () {
 		if expressionString.length > 0 {
 			evaluate()
 		}
 		buttonEnter?.clearFocus()
-		return true
 	}
-	private func userPressedClear () -> Bool {
+	private func userPressedClear () {
 		// NOTE: Clear doesn't clear the last result unless the expression is already empty.
 		if expressionString == "" {
 			lastResult = 0.0
@@ -736,7 +696,6 @@ class CalculatorWindow : QMainWindow {
 		expressionString = ""
 		expressionField?.setText("")
 		buttonClear?.clearFocus()
-		return true
 	}
 
 	private func evaluate()

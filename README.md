@@ -32,4 +32,6 @@ Run the `configure` script to verify these are installed.
 * 0.3 Using Expression framework for expression evaluation.
 * 0.4 Improved GUI to allow keyboard entry.
 * 0.5 Minor fix for SwiftQt 0.28.
+* 0.6 Updated SwiftQt 0.29.
+* 0.7 Updated SwiftQt 0.31.
 

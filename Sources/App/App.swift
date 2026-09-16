@@ -44,7 +44,7 @@ struct AppStruct {
 class App {
 	var calculatorWindow : CalculatorWindow?
 
-	public static let release = "0.6"
+	public static let release = "0.7"
 
 	let maximumWidth = 300
 	let maximumHeight = 400
@@ -63,8 +63,5 @@ class App {
 
 	public func teardown() {
 		self.calculatorWindow = nil
-	}
-
-	deinit {
 	}
 }
